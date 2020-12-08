@@ -1,0 +1,11 @@
+#!/bin/bash
+
+DIST=$(dirname $0)/../dist
+export SCRIPTS=$(dirname $0)
+
+if [ ! -d $DIST ] 
+then
+    mkdir $DIST
+fi
+
+gcc $1.c -o $DIST/$1.out && $DIST/$1.out ${@:2}

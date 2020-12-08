@@ -1,0 +1,16 @@
+#!/bin/bash
+
+function checkout(){
+    cd $1
+    git checkout $2
+    cd -
+}
+
+# @args
+# $1 - library name
+# $2 - version e.g. "master", "tags/v5"
+function save_lib() {
+    lib_dir=$LIB_BASE/$1
+    git clone https://github.com/$1.git $LIB_BASE/$1
+    checkout $lib_dir $2
+}

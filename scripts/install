@@ -1,0 +1,20 @@
+#!/bin/bash
+export SCRIPTS=$(dirname $0)
+export ROOT=$SCRIPTS/..
+export LIB_BASE=$ROOT/libs
+export _SCRIPTS=$SCRIPTS/_
+
+source $_SCRIPTS/get_lib
+
+# get meta.json entries for libs
+libs=$(cat $ROOT/meta.json | jq -r ".libs"| jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]")
+
+rm -rf $LIB_BASE/*
+
+for lib in ${libs[@]}; do
+    # Split into tuple (lib, version)
+    IFS='=' read -ra tpl <<< "${lib}"
+    lib=${tpl[0]}
+    v=${tpl[1]}
+    save_lib $lib $v
+done
