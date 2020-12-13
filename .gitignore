@@ -2,3 +2,4 @@
 lib/
 # Ignore builds
 dist/
+test_out/
