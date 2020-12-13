@@ -1,1 +1,1 @@
-# JS interpreter build in C
+# JS interpreter impl in C 
