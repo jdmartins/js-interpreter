@@ -1,7 +1,6 @@
 #!/bin/bash
 
 DIST=$(dirname $0)/../dist
-export SCRIPTS=$(dirname $0)
 
 if [ ! -d $DIST ] 
 then
