@@ -1,3 +1,11 @@
 #!/bin/bash
 
-# @uninplemented
+TST_IN=$(dirname $0)/../test
+TST_OUT=$(dirname $0)/../test_out
+
+if [ ! -d $TST_OUT ] 
+then
+    mkdir $TST_OUT
+fi
+
+gcc $TST_IN/main.test.c -o $TST_OUT/$1.out && $TST_OUT/$1.out ${@:1}
