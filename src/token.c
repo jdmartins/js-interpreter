@@ -42,7 +42,7 @@ struct hashmap *keywords() {
 token_type *lookup_ident(char *ident) {
     struct keyword *found = hashmap_get(kw, &(struct keyword){.token = ident});
     if (found != NULL) {
-        return found;
+        return found->type;
     }
 
     return IDENT;
