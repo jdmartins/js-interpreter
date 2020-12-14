@@ -63,7 +63,8 @@ token *next_token(lexer *l) {
     return tok;
 }
 
-token *new_token(token_type type, char *ch) {
+
+token *token_new(token_type type, char *ch) {
     token *tok = malloc(sizeof(token));
     tok->type = type;
     tok->literal = ch;
