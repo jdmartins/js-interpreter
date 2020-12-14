@@ -1,8 +1,8 @@
 #include <ctype.h>
 #include <stdbool.h>
 
+#include "./utils/substr.c"
 #include "token.c"
-
 typedef struct lexer {
     char *input;        // pointer to an input string
     int position;       // current position in input (points to current char)
@@ -39,25 +39,39 @@ static void skip_whitespace(lexer *l) {
 token *next_token(lexer *l) {
     token *tok;
 
+    skip_whitespace(l);
+
     switch (l->ch) {
         case '=':
-            tok = new_token(ASSIGN, l->ch);
+            tok = token_new(ASSIGN, l->ch);
         case ';':
-            tok = new_token(SEMICOLON, l->ch);
+            tok = token_new(SEMICOLON, l->ch);
         case '(':
-            tok = new_token(LPAREN, l->ch);
+            tok = token_new(LPAREN, l->ch);
         case ')':
-            tok = new_token(RPAREN, l->ch);
+            tok = token_new(RPAREN, l->ch);
         case ',':
-            tok = new_token(COMMA, l->ch);
+            tok = token_new(COMMA, l->ch);
         case '+':
-            tok = new_token(PLUS, l->ch);
+            tok = token_new(PLUS, l->ch);
         case '{':
-            tok = new_token(LBRACE, l->ch);
+            tok = token_new(LBRACE, l->ch);
         case '}':
-            tok = new_token(RBRACE, l->ch);
+            tok = token_new(RBRACE, l->ch);
         case 0:
-            tok = new_token(EOF, "");
+            tok = token_new(EOF, "");
+        default:
+            if (is_letter_or_underscore(l->ch)) {
+                tok->literal = read_identifier(l);
+                tok->type = lookup_ident(tok->literal);
+                return tok;
+            } else if (is_digit(l->ch)) {
+                tok->type = INT;
+                tok->literal = read_number(l);
+                return tok;
+            } else {
+                tok = token_new(ILLEGAL, l->ch);
+            }
     }
 
     return tok;
