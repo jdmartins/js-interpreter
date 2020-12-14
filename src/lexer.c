@@ -68,6 +68,10 @@ bool is_letter_or_underscore(char *ch) {
     return isalpha(*ch) || *ch == '_';
 }
 
+bool is_digit(char *ch) {
+    return isnumber(*ch);
+}
+
 void lex_free(lexer *l) {
     free(l);
 }
