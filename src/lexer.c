@@ -63,6 +63,31 @@ token *next_token(lexer *l) {
     return tok;
 }
 
+// TODO: since read_* fn's do virtually the same
+// merge them into one main `read` fn
+// and pass as an argument the apropriate
+// function for the condition
+static char *read_number(lexer *l) {
+    int pos = l->position;
+    while (is_digit(l->ch)) {
+        read_char(l);
+    }
+    const char *curr_literal = substr(l->input, pos, l->position);
+    return curr_literal;
+    // TODO: free *curr_literal when its processing is not needed
+}
+
+static char *read_identifier(lexer *l) {
+    int pos = l->position;
+    // update position until the end of the word is found
+    while (is_letter_or_underscore(l->ch)) {
+        read_char(l);
+    }
+
+    const char *curr_literal = substr(l->input, pos, l->position);
+    return curr_literal;
+    // TODO: free *curr_literal when its processing is not needed
+}
 
 token *token_new(token_type type, char *ch) {
     token *tok = malloc(sizeof(token));
