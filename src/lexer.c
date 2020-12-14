@@ -30,6 +30,12 @@ static void read_char(lexer *l) {
     l->read_position += 1;
 }
 
+static void skip_whitespace(lexer *l) {
+    while (l->ch == ' ' || l->ch == '\t' || l->ch == '\n' || l->ch == '\r') {
+        readChar(l);
+    }
+}
+
 token *next_token(lexer *l) {
     token *tok;
 
